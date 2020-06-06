@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zws.mapper.CourseDetailMapper">
+<select id="query" parameterType="CourseDetail" resultMap="java_table_mapper">
+select * from coursedetail
+<where>
+<if test="id!=null and id!=0">
+and id=#{id}
+</if>
+<if test="courseId!=null and ''!=courseId">
+and cid=#{courseId}
+</if>
+<if test="courseName!=null and ''!=courseName">
+and cname=#{courseName}
+</if>
+<if test="userId!=null and ''!=userId">
+and uid=#{userId}
+</if>
+<if test="role!=null and ''!=role">
+and role=#{role}
+</if>
+</where>
+</select>
+<resultMap type="CourseDetail" id="java_table_mapper">
+<id property="id" column="id"/>
+<result property="courseId" column="cid"/>
+<result property="courseName" column="cname"/>
+<result property="userId" column="uid"/>
+<result property="userName" column="uname"/>
+</resultMap>
+<insert id="insert" parameterType="CourseDetail">
+insert into coursedetail (cid,cname,uid,uname,role,grade) value(#{courseId},#{courseName},#{userId},#{userName},#{role},#{grade})
+</insert>
+<update id="updateByAnyField" parameterType="CourseDetail">
+update coursedetail 
+<set>
+<if test="courseId!=null">cid=#{courseId},</if>
+<if test="courseName!=null">cname=#{courseName},</if>
+<if test="userId!=null">uid=#{userId},</if>
+<if test="userName!=null">uname=#{userName},</if>
+<if test="role!=null">role=#{role},</if>
+<if test="grade!=null">grade=#{grade}</if>
+</set>
+ where uid=#{userId}
+</update>
+</mapper>

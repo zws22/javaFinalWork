@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zws.mapper.UserMapper">
+<!-- 查询指定的用户，根据学号和密码查询，返回结果要么为空要么为只有唯一一个用户 -->
+<select id="findUserByUserByIdAndPwd" parameterType="User" resultType="User">
+select * from user where id=#{id} and userPwd=#{userPwd}
+</select>
+<!-- 多字段得组合查询 -->
+<select id="queryWithAnyMethod" parameterType="User" resultType="User">
+select * from user 
+<where>
+<if test="name!=null and ''!=name">
+and name=#{name}
+</if>
+<if test="role!=null and ''!=role">
+and role=#{role}
+</if>
+<if test="sex!=null and ''!=sex">
+and sex=#{sex}
+</if>
+</where>
+</select>
+<update id="updateAnyField" parameterType="User">
+update user set id=#{id},name=#{name},sex=#{sex},userpwd=#{userPwd},role=#{role} where id=#{id}
+</update>
+<insert id="insertUser" parameterType="User">
+insert into User value(#{id},#{name},#{sex},#{userPwd},#{role})
+</insert>
+<delete id="deleteUser" parameterType="User">
+delete from User
+<!-- 根据学号或者姓名进行删除，其他字段没写 -->
+<where>
+<if test="id!=null and ''!=id">
+and id=#{id}
+</if>
+<if test="name!=null and ''!=name">
+and name=#{name}
+</if>
+</where>
+</delete>
+</mapper>

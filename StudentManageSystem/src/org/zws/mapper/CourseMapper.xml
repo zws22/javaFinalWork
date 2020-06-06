@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zws.mapper.CourseMapper">
+<select id="queryById" parameterType="Course" resultType="Course">
+select * from course where id=#{id}
+</select>
+<select id="queryByAnyField" parameterType="Course" resultType="Course">
+select * from course
+<!-- 根据学科号或者学科名或者组合查询 -->
+<where>
+<if test="name!=null and ''!=name">
+and name=#{name}
+</if>
+<if test="id!=null and ''!=id">
+and id=#{id}
+</if>
+</where>
+</select>
+<insert id="insertCourse" parameterType="Course">
+insert into course value(#{id},#{name},#{detail})
+</insert>
+<update id="updateCourse" parameterType="Course">
+update course set name=#{name},detail=#{detail} where id=#{id}
+</update>
+<delete id="deleteCourse" parameterType="Course">
+delete from course 
+<where>
+<if test="id!=null and ''!=id">
+and id=#{id}
+</if>
+<if test="name!=null and ''!=name">
+and name=#{name}
+</if>
+</where>
+</delete>
+</mapper>

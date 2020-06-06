@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+				<!--default指定默认的环境，默认为development用的就是标签environment中id为development的环境  -->
+				<!--<settings>
+			 设置日志，指定具体日志，根据setting标签设置log4j日志
+				不设置默认日志等级为SLF4J→Apache Commons Logging→Log4j 2→Log4j→JDK logging 
+				<setting name="logImpl" value="LOG4J"/>
+				</settings>-->
+				<typeAliases>
+				<!-- 配置别名，减少书写量 -->
+				<package name="org.zws.domain"/>
+				</typeAliases>
+ 	<environments default="development">
+ 		<environment id="development">
+ 		<transactionManager type="JDBC"/><!-- 事务的提交方式JDBC:利用jdbc的方法处理事务，manage的方式 -->
+ 		<dataSource type="POOLED"><!-- 数据源的类型，pooled为数据库连接池，unpooled为传统的jdbc -->
+ 		<!--其余的不需要改，修改数据库的配置信息即可 -->
+ 		<property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+ 		<!-- xml中的url中的&得用&amp;代替 -->
+ 		<property name="url" value="jdbc:mysql://localhost:3306/student?useUnicode=true&amp;charaterEncoding=UTF8&amp;serverTimezone=GMT%2B8"/>
+	 	<property name="username" value="root"/>
+ 		<property name="password" value="123"/>
+	 </dataSource>
+	 </environment>
+ 	</environments>
+ <mappers>
+ <!-- 加载映射文件，我们可以发现全路径的区别，文件是类是分隔符是.，文件是xml时分隔符是/ -->
+ <mapper resource="org/zws/mapper/UserMapper.xml"/>
+  <mapper resource="org/zws/mapper/CourseMapper.xml"/>
+    <mapper resource="org/zws/mapper/CourseDetailMapper.xml"/>
+ </mappers>
+</configuration>
